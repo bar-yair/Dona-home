@@ -13,16 +13,16 @@ function App() {
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
-        <Header />
+      <Header />
         <main className="flex-grow">
-          <Routes>
+      <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/saunas" element={<Saunas />} />
-            <Route path="/sauna-accessories" element={<SaunaAccessories />} />
-            <Route path="/parket-deck" element={<ParketDeck />} />
-            <Route path="/gazebos" element={<Gazebos />} />
-            <Route path="/contactus" element={<ContactUs />} />
-          </Routes>
+        <Route path="/saunas" element={<Saunas />} />
+        <Route path="/sauna-accessories" element={<SaunaAccessories />} />
+        <Route path="/parket-deck" element={<ParketDeck />} />
+        <Route path="/gazebos" element={<Gazebos />} />
+        <Route path="/contactus" element={<ContactUs />} />
+      </Routes>
         </main>
         <Footer />
       </div>

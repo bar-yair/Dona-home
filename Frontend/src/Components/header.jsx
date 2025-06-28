@@ -1,169 +1,75 @@
-import { NavLink } from 'react-router-dom';
-import { Phone, Mail, Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
+const navItems = [
+  { label: 'בית', to: '/' },
+  { label: 'סאונות', to: '/saunas' },
+  { label: 'אביזרים לסאונה', to: '/sauna-accessories' },
+  { label: 'פרקטים', to: '/parket-deck' },
+  { label: 'גזיבו', to: '/gazebos' },
+];
+
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm w-full relative">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo & Tagline */}
-        <div className="flex items-center gap-3">
-          <img src="DONA-HOMES.jpeg" alt="logo" className="w-30 h-30" />
-          <div className="leading-tight">
-            <p className="text-base font-semibold text-gray-800"></p>
-            {/* <p className="text-xs text-gray-500">Premium Wellness Solutions</p> */}
+    <header className="w-full flex justify-center fixed top-0 left-0 z-50 pointer-events-none" style={{ background: 'transparent' }}>
+      <nav
+        dir="rtl"
+        className="pointer-events-auto mt-4 w-[96vw] max-w-xs sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-full shadow-lg flex flex-row items-center px-2 sm:px-6 py-1.5 sm:py-3 border border-gray-200"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
+        {/* Mobile: logo right, hamburger left */}
+        <div className="flex flex-row sm:hidden flex-1 items-center justify-between w-full">
+          <div className="flex items-center min-w-[44px] mr-2">
+            <Link to="/">
+              <img src="DONA-HOMES.jpeg" alt="logo" className="object-contain w-10 h-10" />
+            </Link>
           </div>
+          <button
+            className="p-2 focus:outline-none"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="פתח תפריט"
+          >
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-[#1e2952]">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          {/* Dropdown menu */}
+          {menuOpen && (
+            <div className="absolute top-[70px] left-4 right-4 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col z-50 animate-fade-in">
+              {navItems.map((item) => (
+                <Link
+                  to={item.to}
+                  key={item.label}
+                  className={`px-6 py-4 text-base font-semibold border-b last:border-b-0 border-gray-100 text-right transition-colors duration-200 ${location.pathname === item.to ? 'text-orange-600' : 'text-[#1e2952] hover:text-orange-700'}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="lg:hidden p-2"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Desktop Nav Links */}
-        <nav dir="rtl" className="hidden lg:flex gap-8 text-base font-medium text-gray-700">
-          <NavLink 
-            to="/" 
-            className={({ isActive }) => 
-              isActive 
-                ? "text-green-700 border-b-2 border-green-600 pb-2 px-2" 
-                : "hover:text-green-700 hover:border-b-2 hover:border-green-600 pb-2 px-2"
-            }
-          >
-            בית
-          </NavLink>
-          <NavLink 
-            to="/saunas" 
-            className={({ isActive }) => 
-              isActive 
-                ? "text-green-700 border-b-2 border-green-600 pb-2 px-2" 
-                : "hover:text-green-700 hover:border-b-2 hover:border-green-600 pb-2 px-2"
-            }
-          >
-            סאונות
-          </NavLink>
-          <NavLink 
-            to="/sauna-accessories" 
-            className={({ isActive }) => 
-              isActive 
-                ? "text-green-700 border-b-2 border-green-600 pb-2 px-2" 
-                : "hover:text-green-700 hover:border-b-2 hover:border-green-600 pb-2 px-2"
-            }
-          >
-            אביזרים לסאונה
-          </NavLink>
-          <NavLink 
-            to="/parket-deck" 
-            className={({ isActive }) => 
-              isActive 
-                ? "text-green-700 border-b-2 border-green-600 pb-2 px-2" 
-                : "hover:text-green-700 hover:border-b-2 hover:border-green-600 pb-2 px-2"
-            }
-          >
-            פרקטים
-          </NavLink>
-          <NavLink 
-            to="/gazebos" 
-            className={({ isActive }) => 
-              isActive 
-                ? "text-green-700 border-b-2 border-green-600 pb-2 px-2" 
-                : "hover:text-green-700 hover:border-b-2 hover:border-green-600 pb-2 px-2"
-            }
-          >
-            גזיבו
-          </NavLink>
-        </nav>
-
-        {/* Desktop Contact Info */}
-        <div className="hidden lg:flex flex-col items-end text-sm text-gray-600 gap-2">
-          <a href="tel:+15551234567" className="hover:text-green-700 flex items-center gap-2">
-            <Phone size={18} />
-            <span>0544729425</span>
-          </a>
-          <a href="mailto:info@nordichome.com" className="hover:text-green-700 flex items-center gap-2">
-            <Mail size={18} />
-            <span>mail@dona-homes.com</span>
-          </a>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden absolute top-[100%] left-0 right-0 bg-white shadow-lg z-50">
-            <nav dir="rtl" className="flex flex-col p-4">
-              <NavLink 
-                to="/" 
-                className={({ isActive }) => 
-                  isActive 
-                    ? "text-green-700 border-r-4 border-green-600 py-2 px-4" 
-                    : "hover:text-green-700 hover:border-r-4 hover:border-green-600 py-2 px-4"
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                בית
-              </NavLink>
-              <NavLink 
-                to="/saunas" 
-                className={({ isActive }) => 
-                  isActive 
-                    ? "text-green-700 border-r-4 border-green-600 py-2 px-4" 
-                    : "hover:text-green-700 hover:border-r-4 hover:border-green-600 py-2 px-4"
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                סאונות
-              </NavLink>
-              <NavLink 
-                to="/sauna-accessories" 
-                className={({ isActive }) => 
-                  isActive 
-                    ? "text-green-700 border-r-4 border-green-600 py-2 px-4" 
-                    : "hover:text-green-700 hover:border-r-4 hover:border-green-600 py-2 px-4"
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                אביזרים לסאונה
-              </NavLink>
-              <NavLink 
-                to="/parket-deck" 
-                className={({ isActive }) => 
-                  isActive 
-                    ? "text-green-700 border-r-4 border-green-600 py-2 px-4" 
-                    : "hover:text-green-700 hover:border-r-4 hover:border-green-600 py-2 px-4"
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                פרקטים
-              </NavLink>
-              <NavLink 
-                to="/gazebos" 
-                className={({ isActive }) => 
-                  isActive 
-                    ? "text-green-700 border-r-4 border-green-600 py-2 px-4" 
-                    : "hover:text-green-700 hover:border-r-4 hover:border-green-600 py-2 px-4"
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                גזיבו
-              </NavLink>
-              <div className="border-t border-gray-200 mt-2 pt-2">
-                <a href="tel:+15551234567" className="hover:text-green-700 flex items-center gap-2 py-2 px-4">
-                  <Phone size={18} />
-                  <span>0544729425</span>
-                </a>
-                <a href="mailto:info@nordichome.com" className="hover:text-green-700 flex items-center gap-2 py-2 px-4">
-                  <Mail size={18} />
-                  <span>mail@dona-homes.com</span>
-                </a>
-              </div>
-            </nav>
+        {/* Desktop: links in centered row with equal spacing and logo */}
+        <div className="hidden sm:flex flex-row items-center justify-center gap-8 w-full">
+          <div className="flex items-center min-w-[60px]">
+            <Link to="/">
+              <img src="DONA-HOMES.jpeg" alt="logo" className="object-contain w-14 h-14" />
+            </Link>
           </div>
-        )}
-      </div>
+          {navItems.map((item) => (
+            <Link
+              to={item.to}
+              key={item.label}
+              className={`text-base md:text-lg font-semibold transition-colors duration-200 whitespace-nowrap ${location.pathname === item.to ? 'text-orange-600' : 'text-[#1e2952] hover:text-orange-700'}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
     </header>
   );
 }
