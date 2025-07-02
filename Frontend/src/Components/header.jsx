@@ -24,7 +24,7 @@ export default function Header() {
         <div className="flex flex-row sm:hidden flex-1 items-center justify-between w-full">
           <div className="flex items-center min-w-[44px] mr-2">
             <Link to="/">
-              <img src="DONA-HOMES.jpeg" alt="logo" className="object-contain w-10 h-10" />
+              <img src="/DONA-HOMES.jpeg" alt="logo" className="object-contain w-10 h-10" />
             </Link>
           </div>
           <button
@@ -56,7 +56,7 @@ export default function Header() {
         <div className="hidden sm:flex flex-row items-center justify-center gap-8 w-full">
           <div className="flex items-center min-w-[60px]">
             <Link to="/">
-              <img src="DONA-HOMES.jpeg" alt="logo" className="object-contain w-14 h-14" />
+              <img src="/DONA-HOMES.jpeg" alt="logo" className="object-contain w-14 h-14" />
             </Link>
           </div>
           {navItems.map((item) => (
