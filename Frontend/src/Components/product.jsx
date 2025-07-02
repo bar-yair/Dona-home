@@ -27,7 +27,9 @@ const Product = ({ image, title, price, oldPrice, length, description, highlight
         {oldPrice && (
           <div className="text-sm text-gray-400 line-through mb-1">{oldPrice}</div>
         )}
-        <div className={`text-xl font-extrabold mb-2 ${highlight ? 'text-orange-600' : 'text-gray-800'}`}>₪{price}</div>
+        <div className={`text-xl font-extrabold mb-2 ${highlight ? 'text-orange-600' : 'text-gray-800'}`}>
+          ₪{Number(price).toLocaleString('en-US')}
+        </div>
         {children}
       </div>
     </div>
