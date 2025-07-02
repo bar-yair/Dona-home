@@ -1,21 +1,35 @@
 import React from 'react';
 
-const Product = ({ image, title, price, length }) => {
+// Optional: ProductDetails subcomponent for details
+const ProductDetails = ({ length, description }) => (
+  <div className="text-gray-600 text-sm leading-snug mb-2">
+    {length && <div>אורך: {length} מטר</div>}
+    {description && <div>{description}</div>}
+  </div>
+);
+
+const Product = ({ image, title, price, oldPrice, length, description, highlight, children }) => {
   return (
-    <div 
-      dir="rtl" 
-      className="border border-gray-200 rounded-lg p-4 max-w-xs bg-white shadow-md m-4 
-                 transition-all duration-300 ease-in-out 
-                 hover:scale-105 hover:shadow-xl hover:border-green-200"
+    <div
+      dir="rtl"
+      className="bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col w-full max-w-md mx-auto overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-orange-300"
     >
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-40 object-cover rounded-md mb-3"
-      />
-      <h2 className="text-lg font-semibold mb-1">דגם: {title}</h2>
-      <p className="text-gray-500 mb-1">אורך: {length}</p>
-      <p className="font-bold text-base">₪{price}</p>
+      <div className="w-full aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="object-cover w-full h-full"
+        />
+      </div>
+      <div className="p-6 flex flex-col flex-1">
+        <h2 className="text-2xl font-bold mb-2 text-gray-900">{title}</h2>
+        <ProductDetails length={length} description={description} />
+        {oldPrice && (
+          <div className="text-sm text-gray-400 line-through mb-1">{oldPrice}</div>
+        )}
+        <div className={`text-xl font-extrabold mb-2 ${highlight ? 'text-orange-600' : 'text-gray-800'}`}>₪{price}</div>
+        {children}
+      </div>
     </div>
   );
 };
